@@ -1,0 +1,8 @@
+.cocktails-by-mark {
+  display: flex;
+  flex-direction: column;
+}
+
+.cocktails-list {
+  padding: 0 1vh;
+}

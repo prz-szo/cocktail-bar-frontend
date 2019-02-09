@@ -1,0 +1,16 @@
+.heading {
+  display: flex;
+}
+
+.heading > h2 {
+  font-size: 5vh;
+  line-height: 5.8vh;
+  color: #182026;
+  border-bottom: 1px solid #0E5A8A;
+}
+
+.heading > h2::first-letter {
+  color: white;
+  background-color: #0E5A8A;
+  padding: 0 .375rem;
+}

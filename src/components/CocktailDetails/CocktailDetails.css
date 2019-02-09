@@ -1,0 +1,18 @@
+.cocktail-details {
+  display: grid;
+  grid-row-gap: 2.5vh;
+  justify-content: space-between;
+}
+
+.cocktail-details ol {
+  text-transform: capitalize;
+}
+
+.cocktail-details .bp3-tag {
+  text-transform: none;
+  float: right;
+}
+
+.ingredients-heading .bp3-heading {
+  margin-bottom: 0;
+}

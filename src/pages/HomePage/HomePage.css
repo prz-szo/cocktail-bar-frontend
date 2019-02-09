@@ -1,0 +1,23 @@
+body {
+  background-image: url('homePageBg.jpg');
+  background-size: cover;
+  background-origin: content-box;
+  background-repeat: no-repeat;
+}
+
+.main {
+  margin-top: 5vh;
+  display: flex;
+  padding: 0 10vw;
+  height: auto;
+}
+
+.random-cocktail, .top10-cocktails {
+  width: 40vw;
+  background-color: white;
+  border-radius: 0.125rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
