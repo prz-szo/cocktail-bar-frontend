@@ -13,3 +13,6 @@ export const prepareParams = (body, method = 'GET') => ({
     'Content-Type': 'application/json; charset=utf-8',
   }
 });
+
+export const fetchRandomCocktail = fetching(`http://localhost:3300/cocktails/random`, prepareParams());
+export const fetchAllCocktails = fetching(`http://localhost:3300/cocktails`, prepareParams());

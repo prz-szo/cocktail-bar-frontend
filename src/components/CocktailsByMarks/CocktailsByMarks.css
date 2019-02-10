@@ -3,7 +3,7 @@
   flex-direction: column;
 }
 
-.cocktails-list {
+.cocktails-by-mark-list {
   border-collapse: collapse;
 }
 
@@ -19,6 +19,5 @@
 }
 
 .cocktail:hover {
-  background-color: #A7B6C2;
   background-color: rgba(167,182,194,.7);
 }

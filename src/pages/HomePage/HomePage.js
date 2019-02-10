@@ -4,7 +4,7 @@ import CocktailDetails from '../../components/CocktailDetails/CocktailDetails';
 import CocktailsByMarks from '../../components/CocktailsByMarks/CocktailsByMarks';
 
 import './HomePage.css';
-import { fetching, fetchJson, prepareParams } from '../../utils/fetch';
+import { fetching, fetchJson, prepareParams, fetchRandomCocktail } from '../../utils/fetch';
 
 
 class HomePage extends React.Component {
@@ -29,9 +29,8 @@ class HomePage extends React.Component {
     this.setState({ top10Cocktails: cocktails })
   };
 
-  __fetchRandomCocktail = fetching(`http://localhost:3300/cocktails/random`, prepareParams());
   __randomCocktail = async () => {
-    const randomCocktail = (await this.__fetchRandomCocktail()).cocktail;
+    const randomCocktail = (await fetchRandomCocktail()).cocktail;
     this.setState({ randomCocktail });
   };
 

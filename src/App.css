@@ -4,6 +4,6 @@
   margin-top: 50px;
 }
 
-.bp3-button {
+.bp3-button, .bp3-html-select select {
   outline: none;
 }

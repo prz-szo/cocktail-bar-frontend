@@ -1,0 +1,11 @@
+.cocktails-list {
+  overflow-x: scroll;
+}
+
+.cocktails-list > .cocktail:nth-child(2n+1) {
+  background-color: rgba(191,204,214,.35);
+}
+
+.cocktails-list > .cocktail:hover {
+  background-color: rgba(167,182,194,.7);
+}

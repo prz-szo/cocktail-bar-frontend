@@ -31,7 +31,7 @@ class CocktailsByMarks extends React.Component {
     return (
       <div className='cocktails-by-mark'>
         <Heading name={'Top 10 Cocktails'}/>
-        <table className={classNames(Classes.interactive, Classes.stripped, 'cocktails-list')}>
+        <table className={classNames(Classes.interactive, Classes.stripped, 'cocktails-by-mark-list')}>
           <tbody>
           {this.__renderCocktails(this.props.cocktails)}
           </tbody>

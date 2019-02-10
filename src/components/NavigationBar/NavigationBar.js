@@ -9,8 +9,8 @@ import { NavLink } from 'react-router-dom';
 const LINKS = [
   {
     to: '/bar',
-    icon: 'bank-account',
-    text: 'My bar'
+    icon: 'shop',
+    text: 'Your bar'
   },
   {
     to: '/login',

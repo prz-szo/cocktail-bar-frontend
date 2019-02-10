@@ -1,0 +1,13 @@
+.filter-group {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-row-gap: 1vh;
+  justify-content: center;
+  align-content: space-between;
+  text-overflow: ellipsis;
+}
+
+.filter-group .bp3-input[type="text"] {
+  margin-top: 0;
+  margin-bottom: 0;
+}
