@@ -9,3 +9,11 @@
 .cocktails-list > .cocktail:hover {
   background-color: rgba(167,182,194,.7);
 }
+
+.cocktails-list > .cocktail {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+}

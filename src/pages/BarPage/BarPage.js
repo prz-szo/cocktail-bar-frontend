@@ -29,7 +29,7 @@ class BarPage extends React.Component {
     this.__fetchAllCocktails();
   }
 
-  async __fetchAllCocktails() {
+  __fetchAllCocktails = async () => {
     const cocktails = (await fetchAllCocktails()).cocktails;
     this.setState({ cocktails });
   }
@@ -42,8 +42,12 @@ class BarPage extends React.Component {
     this.setState({ cocktails });
   };
 
-  __setCocktail = (cocktailDetails) => {
+  __viewCocktail = (cocktailDetails) => {
     this.setState({ isCocktailEditable: false, cocktailDetails });
+  };
+
+  __editCocktail = (cocktailDetails) => {
+    this.setState({ isCocktailEditable: true, cocktailDetails });
   };
 
   render() {
@@ -53,16 +57,21 @@ class BarPage extends React.Component {
           <Heading name='Cocktails'/>
           <FilterGroup
             setCocktailsList={this.__setCocktailsList}
-            setCocktail={this.__setCocktail}
+            setCocktail={this.__viewCocktail}
             addNewCocktail={this.__clearCocktail}
           />
-          <CocktailsList cocktails={this.state.cocktails} onClick={this.__setCocktail}/>
+          <CocktailsList
+            cocktails={this.state.cocktails}
+            onClick={this.__viewCocktail}
+            onEdit={this.__editCocktail}
+            onRemove={this.__fetchAllCocktails}
+          />
         </div>
 
         {this.state.isCocktailEditable
           ? <CocktailForm
             {...this.state.cocktailDetails}
-            onChange={this.__setCocktail}
+            onChange={this.__viewCocktail}
           />
           : <CocktailDetails {...this.state.cocktailDetails}/>
         }

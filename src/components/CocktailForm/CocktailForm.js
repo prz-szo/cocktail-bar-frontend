@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, HTMLSelect, InputGroup, Intent, TextArea } from '@blueprintjs/core';
+import { Button, FormGroup, HTMLSelect, InputGroup, Intent, TextArea } from '@blueprintjs/core';
 import Heading from '../../components/Heading/Heading';
 
 import './CocktailForm.css';
 
-const OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const MARKS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 
 class CocktailForm extends React.Component {
@@ -39,7 +39,7 @@ class CocktailForm extends React.Component {
             onChange={this.__changeName}
             placeholder='Provide cocktail name...'
           />
-          <HTMLSelect large options={OPTIONS}/>
+          <HTMLSelect large options={MARKS}/>
           <FormGroup
             helperText="Provide your cocktail recipe..."
             label="Recipe"
@@ -69,6 +69,8 @@ class CocktailForm extends React.Component {
               fill
             />
           </FormGroup>
+          <Button text='Submit' icon='plus' intent={Intent.PRIMARY}/>
+          <Button text='Clear' icon='random' intent={Intent.PRIMARY}/>
         </div>
       </div>);
   }
