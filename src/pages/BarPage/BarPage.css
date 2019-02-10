@@ -8,16 +8,14 @@
   margin-bottom: 0;
 }
 
-.content {
+.bar-page-content {
   display: flex;
-  height: 100vh;
+  height: 93.741vh;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
 
-body {
-  background-image: url('barPageBg.jpg');
+  background-image: url('./barPageBg.jpg');
   background-size: cover;
   background-origin: content-box;
   background-repeat: no-repeat;

@@ -2,10 +2,20 @@
   display: grid;
   grid-row-gap: 2.5vh;
   justify-content: space-between;
+  align-items: center;
 }
 
-.cocktail-details ol {
+.cocktail-details .bp3-callout {
+  width: 35.5vw;
+}
+
+.cocktail-details .bp3-list {
   text-transform: capitalize;
+}
+
+.cocktail-details .bp3-list li {
+  padding: 1vh;
+  font-size: 2vh;
 }
 
 .cocktail-details .bp3-tag {

@@ -32,7 +32,7 @@ class CocktailDetails extends React.Component {
         <OL>{this.props.ingredients.map(ingredient =>
           <li key={ingredient.name}>
             {ingredient.name}
-            <Tag round={true} intent={Intent.PRIMARY}>{ingredient.amount} {ingredient.measure}</Tag>
+            <Tag round large intent={Intent.PRIMARY}>{ingredient.amount} {ingredient.measure}</Tag>
           </li>
         )}</OL>
       </div>);

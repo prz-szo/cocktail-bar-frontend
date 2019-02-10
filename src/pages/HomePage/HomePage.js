@@ -4,43 +4,58 @@ import CocktailDetails from '../../components/CocktailDetails/CocktailDetails';
 import CocktailsByMarks from '../../components/CocktailsByMarks/CocktailsByMarks';
 
 import './HomePage.css';
+import { fetching, fetchJson, prepareParams } from '../../utils/fetch';
 
 
 class HomePage extends React.Component {
-  render() {
-    const cocktail = {
-      id: 1,
-      name: "The International",
-      recipe: "Fill glass with ice. Add vermouths. Add club soda and stir. Add lemon twist.",
-      ingredients: [
-        {
-          name: "dry vermouth",
-          amount: 45,
-          measure: "ml"
-        },
-        {
-          name: "club soda",
-          amount: 120,
-          measure: "ml"
-        },
-        {
-          name: "sweet vermouth",
-          amount: 45,
-          measure: "ml"
-        }
-      ],
-      averageMark: 10
+  constructor(props) {
+    super(props);
+    this.state = {
+      randomCocktail: {
+        id: 0,
+        name: '',
+        recipe: '',
+        ingredients: [],
+      },
+      top10Cocktails: [],
     };
+    this.__randomCocktail();
+    this.__top10Cocktails();
+  }
 
+  __fetchTop10Cocktails = fetching('http://localhost:3300/cocktails/top10', prepareParams());
+  __top10Cocktails = async () => {
+    const cocktails = (await this.__fetchTop10Cocktails()).cocktails;
+    this.setState({ top10Cocktails: cocktails })
+  };
+
+  __fetchRandomCocktail = fetching(`http://localhost:3300/cocktails/random`, prepareParams());
+  __randomCocktail = async () => {
+    const randomCocktail = (await this.__fetchRandomCocktail()).cocktail;
+    this.setState({ randomCocktail });
+  };
+
+  __specificCocktail = async (id) => {
+    const cocktail = (await fetchJson(`http://localhost:3300/cocktails/${id}`, prepareParams())).cocktail;
+    this.setState({ randomCocktail: cocktail });
+  };
+
+  render() {
     return (
       <div className="main">
         <div className='random-cocktail'>
-          <CocktailDetails {...cocktail} />
-          <Button icon="refresh" large intent={Intent.PRIMARY} text={"Random cocktail"}/>
+          <CocktailDetails {...this.state.randomCocktail} />
+          <Button
+            icon="refresh"
+            large
+            intent={Intent.PRIMARY}
+            text={"Random cocktail"}
+            onClick={this.__randomCocktail}
+          />
         </div>
         <Divider/>
         <div className='top10-cocktails'>
-          <CocktailsByMarks/>
+          <CocktailsByMarks fetchCocktail={this.__specificCocktail} cocktails={this.state.top10Cocktails}/>
         </div>
       </div>
     );

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
 import HomePage from './pages/HomePage/HomePage';
 import BarPage from './pages/BarPage/BarPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
 import NavigationBar from './components/NavigationBar/NavigationBar'
 
 import './App.css';
@@ -13,9 +14,13 @@ class App extends Component {
     return (
       <div className="App">
         <NavigationBar/>
-        <Route path="/" component={HomePage} exact/>
-        <Route path="/login" component={LoginPage}/>
-        <Route path="/bar" component={BarPage}/>
+        <Switch>
+          <Route path="/" exact component={HomePage}/>
+          <Route path="/bar" component={BarPage}/>
+          <Route path="/login" component={LoginPage}/>
+          <Route path="/register" component={RegisterPage}/>
+          <Redirect to="/" />
+        </Switch>
       </div>
     );
   }

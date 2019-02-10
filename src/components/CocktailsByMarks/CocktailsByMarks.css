@@ -4,5 +4,21 @@
 }
 
 .cocktails-list {
-  padding: 0 1vh;
+  border-collapse: collapse;
+}
+
+.cocktail td {
+  vertical-align: center;
+  text-align: center;
+  padding: 1.2vh;
+  font-size: 1.1rem;
+}
+
+.cocktail:nth-child(2n+1) {
+  background-color: rgba(191,204,214,.35);
+}
+
+.cocktail:hover {
+  background-color: #A7B6C2;
+  background-color: rgba(167,182,194,.7);
 }

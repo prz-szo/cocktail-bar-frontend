@@ -1,22 +1,25 @@
-body {
-  background-image: url('homePageBg.jpg');
-  background-size: cover;
-  background-origin: content-box;
-  background-repeat: no-repeat;
-}
+@import "~normalize.css";
+@import "~@blueprintjs/core/lib/css/blueprint.css";
+@import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
 
 .main {
-  margin-top: 5vh;
+  margin-top: 10vh;
   display: flex;
   padding: 0 10vw;
   height: auto;
 }
 
+body {
+  background-image: url('./homePageBg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .random-cocktail, .top10-cocktails {
   width: 40vw;
-  background-color: white;
+  background-color: rgba(255,255,255,.94);
   border-radius: 0.125rem;
-  padding: 2rem;
+  padding: 2vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
