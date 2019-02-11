@@ -17,7 +17,7 @@ class CocktailDetails extends React.Component {
       name: PropTypes.string.isRequired,
       amount: PropTypes.number.isRequired,
       measure: PropTypes.string.isRequired,
-    })),
+    })).isRequired,
   };
 
   render() {

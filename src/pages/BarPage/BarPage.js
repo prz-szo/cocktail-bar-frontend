@@ -5,7 +5,7 @@ import Bar from '../../components/Bar/Bar';
 import CocktailsList from '../../components/CocktailsList/CocktailsList';
 import CocktailForm from '../../components/CocktailForm/CocktailForm';
 import CocktailDetails from '../../components/CocktailDetails/CocktailDetails';
-import { fetchAllCocktails } from '../../utils/fetch';
+import { fetchAllCocktails, fetchJson, prepareParams } from '../../utils/fetch';
 
 import './BarPage.css';
 
@@ -31,23 +31,48 @@ class BarPage extends React.Component {
 
   __fetchAllCocktails = async () => {
     const cocktails = (await fetchAllCocktails()).cocktails;
+    cocktails.sort((a, b) => a.id - b.id);
     this.setState({ cocktails });
-  }
+  };
 
   __clearCocktail = () => {
     this.setState({ isCocktailEditable: true, cocktailDetails: EMPTY_COCKTAIL_DATA });
   };
-
   __setCocktailsList = (cocktails) => {
     this.setState({ cocktails });
   };
-
-  __viewCocktail = (cocktailDetails) => {
+  __previewCocktail = (cocktailDetails) => {
     this.setState({ isCocktailEditable: false, cocktailDetails });
   };
-
-  __editCocktail = (cocktailDetails) => {
+  __enableEditingCocktail = (cocktailDetails) => {
     this.setState({ isCocktailEditable: true, cocktailDetails });
+  };
+  __submitCocktail = (cocktailDetails) => {
+    console.log('Submit cocktail');
+    if (cocktailDetails.id === 0){
+      this.__sendCocktailToDB(cocktailDetails).then(() => {
+        this.__fetchAllCocktails();
+        this.setState({ isCocktailEditable: false, cocktailDetails });
+      });
+    } else {
+      this.__updateCocktailInDB(cocktailDetails).then(() => {
+        this.__fetchAllCocktails();
+        this.setState({ isCocktailEditable: false, cocktailDetails });
+      });
+    }
+    // this.setState({ isCocktailEditable: false, cocktailDetails });
+  };
+
+  __sendCocktailToDB = async (cocktail) => {
+    const toSend = {...cocktail};
+    delete toSend.id;
+    const cocktailId = (await fetchJson(`http://localhost:3300/cocktails`, prepareParams(toSend, 'POST'))).cocktail;
+    cocktail.id = +cocktailId;
+  };
+
+  __updateCocktailInDB = async (cocktail) => {
+    const message = (await fetchJson(`http://localhost:3300/cocktails/${cocktail.id}`, prepareParams(cocktail, 'PUT'))).message;
+    console.log(message);
   };
 
   render() {
@@ -57,13 +82,13 @@ class BarPage extends React.Component {
           <Heading name='Cocktails'/>
           <FilterGroup
             setCocktailsList={this.__setCocktailsList}
-            setCocktail={this.__viewCocktail}
+            setCocktail={this.__previewCocktail}
             addNewCocktail={this.__clearCocktail}
           />
           <CocktailsList
             cocktails={this.state.cocktails}
-            onClick={this.__viewCocktail}
-            onEdit={this.__editCocktail}
+            onClick={this.__previewCocktail}
+            onEdit={this.__enableEditingCocktail}
             onRemove={this.__fetchAllCocktails}
           />
         </div>
@@ -71,7 +96,8 @@ class BarPage extends React.Component {
         {this.state.isCocktailEditable
           ? <CocktailForm
             {...this.state.cocktailDetails}
-            onChange={this.__viewCocktail}
+            onChange={this.__enableEditingCocktail}
+            onSubmit={this.__submitCocktail}
           />
           : <CocktailDetails {...this.state.cocktailDetails}/>
         }

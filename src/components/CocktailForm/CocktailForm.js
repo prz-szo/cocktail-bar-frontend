@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, FormGroup, HTMLSelect, InputGroup, Intent, TextArea } from '@blueprintjs/core';
 import Heading from '../../components/Heading/Heading';
+import EditableIngredientsList from '../../components/EditableIngredientsList/EditableIngredientsList';
 
 import './CocktailForm.css';
 
@@ -19,10 +20,34 @@ class CocktailForm extends React.Component {
       amount: PropTypes.number.isRequired,
       measure: PropTypes.string.isRequired,
     })),
+    onChange: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
   };
 
-  __changeName = (e) => this.props.onChange({ ...this.props, name: e.target.value });
-  __changeRecipe = (e) => this.props.onChange({ ...this.props, recipe: e.target.value });
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: props.name || '',
+      recipe: props.recipe || '',
+      mark: 0,
+      ingredients: props.ingredients || [],
+    }
+  }
+
+  __changeName = (e) => {
+    this.props.onChange({ ...this.props, name: e.target.value })
+  };
+  __changeRecipe = (e) => {
+    this.props.onChange({ ...this.props, recipe: e.target.value });
+  };
+  __changeIngredients = (ingredients) => {
+    this.props.onChange({ ...this.props, ingredients });
+  };
+
+  __submitCocktail = () => {
+    const {id, ingredients, name, recipe} = this.props;
+    this.props.onSubmit({id, ingredients, name, recipe})
+  };
 
   render() {
     return (
@@ -34,12 +59,15 @@ class CocktailForm extends React.Component {
             fill
             large
             intent={Intent.PRIMARY}
-            value={this.props.id !== 0 ? this.props.name : ''}
+            value={this.props.name}
             leftIcon='edit'
             onChange={this.__changeName}
             placeholder='Provide cocktail name...'
           />
-          <HTMLSelect large options={MARKS}/>
+          <HTMLSelect
+            large
+            options={MARKS}
+          />
           <FormGroup
             helperText="Provide your cocktail recipe..."
             label="Recipe"
@@ -55,22 +83,19 @@ class CocktailForm extends React.Component {
               fill
             />
           </FormGroup>
-          <FormGroup
-            helperText="Choose ingredients..."
-            label="Ingredients"
-            labelInfo="(required)"
-            intent={Intent.PRIMARY}
-          >
-            <TextArea
-              large
-              intent={Intent.PRIMARY}
-              onChange={this.__changeRecipe}
-              value={this.props.ingredients}
+          <EditableIngredientsList
+            ingredients={this.props.ingredients}
+            onChange={this.__changeIngredients}
+          />
+          <div className='control-buttons'>
+            <Button
+              text='Submit'
               fill
+              icon='plus'
+              intent={Intent.PRIMARY}
+              onClick={this.__submitCocktail}
             />
-          </FormGroup>
-          <Button text='Submit' icon='plus' intent={Intent.PRIMARY}/>
-          <Button text='Clear' icon='random' intent={Intent.PRIMARY}/>
+          </div>
         </div>
       </div>);
   }

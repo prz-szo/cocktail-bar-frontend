@@ -1,6 +1,5 @@
 export const fetchJson = (url, params) =>
-  fetch(url, params)
-    .then(response => response.json());
+  fetch(url, params).then(response => response.json());
 
 export const fetching = (url, params) => () =>
   fetch(url, params).then(response => response.json());
@@ -16,3 +15,4 @@ export const prepareParams = (body, method = 'GET') => ({
 
 export const fetchRandomCocktail = fetching(`http://localhost:3300/cocktails/random`, prepareParams());
 export const fetchAllCocktails = fetching(`http://localhost:3300/cocktails`, prepareParams());
+export const fetchAllIngredients = fetching(`http://localhost:3300/ingredients`, prepareParams());
