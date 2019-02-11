@@ -7,6 +7,7 @@ import RegisterPage from './pages/RegisterPage/RegisterPage';
 import NavigationBar from './components/NavigationBar/NavigationBar'
 
 import './App.css';
+import AuthorizedRoute from './utils/AuthorizedRoute';
 
 
 class App extends Component {
@@ -16,7 +17,7 @@ class App extends Component {
         <NavigationBar/>
         <Switch>
           <Route path="/" exact component={HomePage}/>
-          <Route path="/bar" component={BarPage}/>
+          <AuthorizedRoute path='/bar' isAuthenticated={!!window.localStorage.getItem('token')} component={BarPage}/>
           <Route path="/login" component={LoginPage}/>
           <Route path="/register" component={RegisterPage}/>
           <Redirect to="/" />

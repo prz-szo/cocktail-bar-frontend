@@ -1,32 +1,28 @@
-import React from 'react-dom';
-import { Route, Redirect } from 'react-router-dom';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Redirect, Route } from 'react-router-dom';
 
-class AuthorizedRoute extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      isLoggedIn: this.__isAuthenticated()
+const AuthenticatedRoute = ({ component: Component, isAuthenticated, ...rest }) => (
+  <Route
+    {...rest}
+
+    render={props => isAuthenticated ?
+      <Component {...props} />
+      :
+      <Redirect to={{
+        pathname: "/login",
+        state: { from: props.location }
+      }}
+      />
     }
-  }
-  __isAuthenticated = () => {
-    return window.localStorage.getItem('userToken') !== null;
-  };
-  //
-  // componentWillMount() {
-  //   getLoggedUser()
-  // }
+  />
+);
 
-  render() {
-    const { component: Component, ...rest } = this.props;
-    return (
-      <Route {...rest} render={props => {
-        return this.state.isLoggedIn
-          ? <Component {...props} />
-          : <Redirect to="/login"/>
-      }}/>
-    )
-  }
-}
+AuthenticatedRoute.propTypes = {
+  component: PropTypes.any,
+  isAuthenticated: PropTypes.bool.isRequired,
+  rest: PropTypes.any
+};
 
-export default AuthorizedRoute;
+export default AuthenticatedRoute;

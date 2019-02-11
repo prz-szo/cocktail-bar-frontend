@@ -1,0 +1,9 @@
+.content > .bp3-card {
+  display: grid;
+  grid-row-gap: 1vh;
+  grid-template-columns: 100%;
+}
+
+.bp3-input, .bp3-input-action {
+  outline: none;
+}

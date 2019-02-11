@@ -3,39 +3,11 @@ import { Alignment, Button, Navbar } from '@blueprintjs/core';
 import * as Classes from '@blueprintjs/core/lib/esm/common/classes';
 
 import './NavigationBar.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
+import { isAuthenticated } from '../../utils/isAuthenticated';
 
-
-const LINKS = [
-  {
-    to: '/bar',
-    icon: 'shop',
-    text: 'Your bar'
-  },
-  {
-    to: '/login',
-    icon: 'log-in',
-    text: 'Login'
-  },
-  {
-    to: '/register',
-    icon: 'add',
-    text: 'Register'
-  },
-];
 
 class NavigationBar extends React.Component {
-  __renderLinks() {
-    return LINKS.map((link, index) =>
-      <React.Fragment key={link.to}>
-        <NavLink to={link.to}>
-          <Button large minimal icon={link.icon} text={link.text}/>
-        </NavLink>
-        {index !== LINKS.length-1 ? <Navbar.Divider/> : null}
-      </React.Fragment>
-    );
-  }
-
   render() {
     return <Navbar fixedToTop>
       <Navbar.Group align={Alignment.LEFT}>
@@ -44,10 +16,29 @@ class NavigationBar extends React.Component {
         </NavLink>
       </Navbar.Group>
       <Navbar.Group align={Alignment.RIGHT}>
-        {this.__renderLinks()}
+        {isAuthenticated() &&
+        <NavLink to='/bar'>
+          <Button large minimal icon='shop' text='Your bar'/>
+        </NavLink>
+        }
+        <Navbar.Divider/>
+        {!isAuthenticated() ?
+          <NavLink to='/login'>
+            <Button large minimal icon='log-in' text='Login'/>
+          </NavLink>
+          : <Button large minimal icon='log-in' text='Logout' onClick={()=> {
+            window.localStorage.removeItem('token');
+            this.props.history.push('/');
+          }}/>
+        }
+        <Navbar.Divider/>
+        <NavLink to='/register'>
+          <Button large minimal icon='add' text='Register'/>
+        </NavLink>
+        <Navbar.Divider/>
       </Navbar.Group>
     </Navbar>;
   }
 }
 
-export default NavigationBar;
+export default withRouter(NavigationBar);

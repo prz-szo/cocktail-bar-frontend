@@ -5,7 +5,7 @@ import Bar from '../../components/Bar/Bar';
 import CocktailsList from '../../components/CocktailsList/CocktailsList';
 import CocktailForm from '../../components/CocktailForm/CocktailForm';
 import CocktailDetails from '../../components/CocktailDetails/CocktailDetails';
-import { fetchAllCocktails, fetchJson, prepareParams } from '../../utils/fetch';
+import { fetchAllCocktails, fetchJson, prepareAuthParams } from '../../utils/fetch';
 
 import './BarPage.css';
 
@@ -66,12 +66,16 @@ class BarPage extends React.Component {
   __sendCocktailToDB = async (cocktail) => {
     const toSend = {...cocktail};
     delete toSend.id;
-    const cocktailId = (await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails`, prepareParams(toSend, 'POST'))).cocktail;
+    const cocktailId = (await fetchJson(
+      `http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails`,
+      prepareAuthParams(toSend, 'POST'))).cocktail;
     cocktail.id = +cocktailId;
   };
 
   __updateCocktailInDB = async (cocktail) => {
-    const message = (await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/${cocktail.id}`, prepareParams(cocktail, 'PUT'))).message;
+    const message = (await fetchJson(
+      `http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/${cocktail.id}`,
+      prepareAuthParams(cocktail, 'PUT'))).message;
     console.log(message);
   };
 

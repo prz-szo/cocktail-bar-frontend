@@ -13,6 +13,16 @@ export const prepareParams = (body, method = 'GET') => ({
   }
 });
 
+export const prepareAuthParams = (body, method = 'GET') => ({
+  method,
+  mode: 'cors',
+  body: JSON.stringify(body),
+  headers: {
+    'Content-Type': 'application/json; charset=utf-8',
+    'x-access-token': window.localStorage.getItem('token')
+  }
+});
+
 export const fetchRandomCocktail = fetching(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/random`, prepareParams());
 export const fetchAllCocktails = fetching(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails`, prepareParams());
 export const fetchAllIngredients = fetching(`http://localhost:${process.env.REACT_APP_BACK_PORT}/ingredients`, prepareParams());

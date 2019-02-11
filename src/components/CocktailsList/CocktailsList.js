@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button, Intent, Tag } from '@blueprintjs/core';
-import { fetchJson, prepareParams } from '../../utils/fetch';
+import { fetchJson, prepareParams, prepareAuthParams } from '../../utils/fetch';
 
 import './CocktailsList.css';
 
@@ -19,17 +19,18 @@ class CocktailsList extends React.Component {
   };
 
   __fetchCocktail = async (id) => {
-    const cocktail = (await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/${id}`, prepareParams())).cocktail;
+    const cocktail = (await fetchJson(
+      `http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/${id}`, prepareParams())).cocktail;
     this.props.onClick(cocktail);
   };
 
   __editCocktail = async (id) => {
-    const cocktail = (await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/${id}`, prepareParams())).cocktail;
+    const cocktail = (await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/${id}`, prepareAuthParams())).cocktail;
     this.props.onEdit(cocktail);
   };
 
   __deleteCocktail = async (id) => {
-    const cocktail = await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/${id}`, prepareParams({}, 'DELETE'));
+    const cocktail = await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/${id}`, prepareAuthParams({}, 'DELETE'));
     if (cocktail.message === 'Removed') {
       this.props.onRemove();
     }
