@@ -20,21 +20,29 @@ class HomePage extends React.Component {
       },
       top10Cocktails: [],
     };
+  }
 
-    this.__fetchAndSaveIntoIDB().then(() => {
+  async componentDidMount() {
+    const cocktails = await idbCocktails.getAll();
+    if (cocktails.length === 0) {
+      this.__fetchAndSaveIntoIDB().then(async () => {
+        await this.__randomCocktail();
+        await this.__top10Cocktails();
+      });
+    } else {
       this.__randomCocktail();
       this.__top10Cocktails();
-    });
+    }
   }
 
   __fetchAndSaveIntoIDB = async () => {
     const allCocktails = (await fetchAllCocktails()).cocktails;
     allCocktails.map(async cocktail => {
-      const cocktailDetails = (await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/${cocktail.id}`, prepareParams())).cocktail;
+      const cocktailDetails = (await fetchJson(`${process.env.REACT_APP_BACK}/cocktails/${cocktail.id}`, prepareParams())).cocktail;
       await idbCocktails.set(cocktail.id, cocktailDetails);
     });
 
-    const top10Cocktails = (await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/top10`, prepareParams())).cocktails;
+    const top10Cocktails = (await fetchJson(`${process.env.REACT_APP_BACK}/cocktails/top10`, prepareParams())).cocktails;
     top10Cocktails.map(async cocktail => {
       const cocktailsDetail = (await idbCocktails.get(cocktail.id));
       idbCocktails.setTop10(cocktail.id, cocktailsDetail);
@@ -43,6 +51,7 @@ class HomePage extends React.Component {
 
   __top10Cocktails = async () => {
     const cocktails = (await idbCocktails.getTop10All());
+    cocktails.sort((a, b) => b.averageMark - a.averageMark);
     this.setState({ top10Cocktails: cocktails });
   };
 

@@ -41,25 +41,25 @@ class FilterGroup extends React.Component {
   __fetchCocktails = async () => {
     switch (this.state.query) {
       case OPTIONS.name:
-        const result = (await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails?name=${this.state.value}`));
+        const result = (await fetchJson(`${process.env.REACT_APP_BACK}/cocktails?name=${this.state.value}`));
         if (result.cocktail) {
           this.props.setCocktail(result.cocktail);
         }
         break;
       case OPTIONS.ingredients:
-        const cocktailsByIngredients = (await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails?ingredients=${this.state.value}`)).cocktails;
+        const cocktailsByIngredients = (await fetchJson(`${process.env.REACT_APP_BACK}/cocktails?ingredients=${this.state.value}`)).cocktails;
         if (cocktailsByIngredients) {
           this.props.setCocktailsList(cocktailsByIngredients);
         }
         break;
       case OPTIONS.marks:
-        const cocktailsByMarks = (await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails?mark=${this.state.value}`)).cocktails;
+        const cocktailsByMarks = (await fetchJson(`${process.env.REACT_APP_BACK}/cocktails?mark=${this.state.value}`)).cocktails;
         if (cocktailsByMarks) {
           this.props.setCocktailsList(cocktailsByMarks);
         }
         break;
       default:
-        const cocktails = (await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails`)).cocktails;
+        const cocktails = (await fetchJson(`${process.env.REACT_APP_BACK}/cocktails`)).cocktails;
         if (cocktails) {
           this.props.setCocktailsList(cocktails);
         }

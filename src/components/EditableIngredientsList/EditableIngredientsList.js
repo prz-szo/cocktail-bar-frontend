@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, FormGroup, HTMLSelect, InputGroup, Intent, Tag } from '@blueprintjs/core';
+import { Button, FormGroup, ControlGroup, HTMLSelect, InputGroup, Intent, Tag } from '@blueprintjs/core';
 import { fetchAllIngredients } from '../../utils/fetch';
 import measures from '../../utils/measures';
 
@@ -60,9 +60,9 @@ class EditableIngredientsList extends React.Component {
   };
 
   __addIngredient = () => {
-    const {name, amount, measure} = this.state.value;
+    const { name, amount, measure } = this.state.value;
     const ingredients = [...this.props.ingredients];
-    ingredients.push({name, amount, measure});
+    ingredients.push({ name, amount, measure });
     this.props.onChange(ingredients);
   };
 
@@ -77,18 +77,21 @@ class EditableIngredientsList extends React.Component {
       <div className='editable-ingredients-list'>
         <FormGroup className='add-ingredient-form' intent={Intent.PRIMARY}>
           <HTMLSelect
+            fill
             options={this.state.fullIngredientsList}
             onChange={this.__selectIngredient}
           />
-          <InputGroup
-            type='number'
-            intent={Intent.PRIMARY}
-            onChange={this.__inputAmount}
-          />
-          <HTMLSelect
-            options={measures}
-            onChange={this.__selectMeasure}
-          />
+          <ControlGroup fill>
+            <InputGroup
+              type='number'
+              intent={Intent.PRIMARY}
+              onChange={this.__inputAmount}
+            />
+            <HTMLSelect
+              options={measures}
+              onChange={this.__selectMeasure}
+            />
+          </ControlGroup>
           <Button
             text='Add ingredient'
             icon='add-row-bottom'
@@ -99,13 +102,15 @@ class EditableIngredientsList extends React.Component {
           <div className='ingredient' key={ingredient.name}>
             <span>{index + 1}</span>
             <span>{ingredient.name}</span>
-            <Tag round large intent={Intent.PRIMARY}>{ingredient.amount} {ingredient.measure}</Tag>
-            <Button
-              icon='remove'
-              intent={Intent.DANGER}
-              minimal
-              onClick={() => this.__deleteIngredient(ingredient.name)}
-            />
+            <div>
+              <Tag round large intent={Intent.PRIMARY}>{ingredient.amount} {ingredient.measure}</Tag>
+              <Button
+                icon='remove'
+                intent={Intent.DANGER}
+                minimal
+                onClick={() => this.__deleteIngredient(ingredient.name)}
+              />
+            </div>
           </div>)}
       </div>);
   }

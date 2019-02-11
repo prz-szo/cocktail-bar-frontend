@@ -23,6 +23,6 @@ export const prepareAuthParams = (body, method = 'GET') => ({
   }
 });
 
-export const fetchRandomCocktail = fetching(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/random`, prepareParams());
-export const fetchAllCocktails = fetching(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails`, prepareParams());
-export const fetchAllIngredients = fetching(`http://localhost:${process.env.REACT_APP_BACK_PORT}/ingredients`, prepareParams());
+export const fetchRandomCocktail = fetching(`${process.env.REACT_APP_BACK}/cocktails/random`, prepareParams());
+export const fetchAllCocktails = fetching(`${process.env.REACT_APP_BACK}/cocktails`, prepareParams());
+export const fetchAllIngredients = fetching(`${process.env.REACT_APP_BACK}/ingredients`, prepareParams());

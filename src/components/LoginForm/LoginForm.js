@@ -30,7 +30,7 @@ class LoginForm extends React.Component {
   __logIn = async () => {
     const {email, password} = this.state;
     const result = (await fetchJson(
-      `http://localhost:${process.env.REACT_APP_BACK_PORT}/users/login`,
+      `${process.env.REACT_APP_BACK}/users/login`,
       prepareParams({email, password}, 'POST')));
     if(result.message === "No data returned from the query.") {
       this.setState({errors: ['Provided user does not exist']})

@@ -30,12 +30,9 @@
   grid-template-columns: 100%;
   grid-row-gap: 1vh;
   align-content: start;
-  height: 68vh;
+  height: 85vh;
 }
 
-.cocktail-info, .cocktail-details {
-  height: auto;
-}
 
 .bar-page-content > .users-bar {
   grid-column: 1 / span 2;

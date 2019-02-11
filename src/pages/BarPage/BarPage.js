@@ -1,7 +1,6 @@
 import React from 'react';
 import Heading from '../../components/Heading/Heading';
 import FilterGroup from '../../components/FilterGroup/FilterGroup';
-import Bar from '../../components/Bar/Bar';
 import CocktailsList from '../../components/CocktailsList/CocktailsList';
 import CocktailForm from '../../components/CocktailForm/CocktailForm';
 import CocktailDetails from '../../components/CocktailDetails/CocktailDetails';
@@ -67,14 +66,14 @@ class BarPage extends React.Component {
     const toSend = {...cocktail};
     delete toSend.id;
     const cocktailId = (await fetchJson(
-      `http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails`,
+      `${process.env.REACT_APP_BACK}/cocktails`,
       prepareAuthParams(toSend, 'POST'))).cocktail;
     cocktail.id = +cocktailId;
   };
 
   __updateCocktailInDB = async (cocktail) => {
     const message = (await fetchJson(
-      `http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/${cocktail.id}`,
+      `${process.env.REACT_APP_BACK}/cocktails/${cocktail.id}`,
       prepareAuthParams(cocktail, 'PUT'))).message;
     console.log(message);
   };
@@ -106,9 +105,9 @@ class BarPage extends React.Component {
           : <CocktailDetails {...this.state.cocktailDetails}/>
         }
 
-        <div className='users-bar'>
-          <Bar/>
-        </div>
+        {/*<div className='users-bar'>*/}
+          {/*<Bar/>*/}
+        {/*</div>*/}
 
       </div>
     );

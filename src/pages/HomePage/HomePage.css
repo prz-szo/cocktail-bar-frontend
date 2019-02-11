@@ -9,6 +9,10 @@
   height: auto;
 }
 
+.main .cocktail-info, .main .cocktail-details {
+  height: auto;
+}
+
 body {
   background-image: url('./homePageBg.jpg');
   background-size: cover;
