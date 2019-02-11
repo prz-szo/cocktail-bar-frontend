@@ -12,7 +12,7 @@ class CocktailsByMarks extends React.Component {
     cocktails: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
-      avg_mark: PropTypes.number.isRequired,
+      averageMark: PropTypes.number.isRequired,
     })),
     fetchCocktail: PropTypes.func.isRequired
   };
@@ -22,7 +22,7 @@ class CocktailsByMarks extends React.Component {
       <tr key={cocktail.id} className='cocktail' onClick={() => this.props.fetchCocktail(cocktail.id)}>
         <td><Tag intent={Intent.SUCCESS} large>{index + 1}</Tag></td>
         <td>{cocktail.name}</td>
-        <td><Tag round intent={Intent.PRIMARY} large>{cocktail.avg_mark}</Tag></td>
+        <td><Tag round intent={Intent.PRIMARY} large>{cocktail.averageMark}</Tag></td>
       </tr>
     ));
   }
