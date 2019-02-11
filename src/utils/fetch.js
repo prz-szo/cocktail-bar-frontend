@@ -13,6 +13,6 @@ export const prepareParams = (body, method = 'GET') => ({
   }
 });
 
-export const fetchRandomCocktail = fetching(`http://localhost:3300/cocktails/random`, prepareParams());
-export const fetchAllCocktails = fetching(`http://localhost:3300/cocktails`, prepareParams());
-export const fetchAllIngredients = fetching(`http://localhost:3300/ingredients`, prepareParams());
+export const fetchRandomCocktail = fetching(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/random`, prepareParams());
+export const fetchAllCocktails = fetching(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails`, prepareParams());
+export const fetchAllIngredients = fetching(`http://localhost:${process.env.REACT_APP_BACK_PORT}/ingredients`, prepareParams());

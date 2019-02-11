@@ -19,17 +19,17 @@ class CocktailsList extends React.Component {
   };
 
   __fetchCocktail = async (id) => {
-    const cocktail = (await fetchJson(`http://localhost:3300/cocktails/${id}`, prepareParams())).cocktail;
+    const cocktail = (await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/${id}`, prepareParams())).cocktail;
     this.props.onClick(cocktail);
   };
 
   __editCocktail = async (id) => {
-    const cocktail = (await fetchJson(`http://localhost:3300/cocktails/${id}`, prepareParams())).cocktail;
+    const cocktail = (await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/${id}`, prepareParams())).cocktail;
     this.props.onEdit(cocktail);
   };
 
   __deleteCocktail = async (id) => {
-    const cocktail = await fetchJson(`http://localhost:3300/cocktails/${id}`, prepareParams({}, 'DELETE'));
+    const cocktail = await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/${id}`, prepareParams({}, 'DELETE'));
     if (cocktail.message === 'Removed') {
       this.props.onRemove();
     }

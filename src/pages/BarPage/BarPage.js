@@ -66,12 +66,12 @@ class BarPage extends React.Component {
   __sendCocktailToDB = async (cocktail) => {
     const toSend = {...cocktail};
     delete toSend.id;
-    const cocktailId = (await fetchJson(`http://localhost:3300/cocktails`, prepareParams(toSend, 'POST'))).cocktail;
+    const cocktailId = (await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails`, prepareParams(toSend, 'POST'))).cocktail;
     cocktail.id = +cocktailId;
   };
 
   __updateCocktailInDB = async (cocktail) => {
-    const message = (await fetchJson(`http://localhost:3300/cocktails/${cocktail.id}`, prepareParams(cocktail, 'PUT'))).message;
+    const message = (await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/${cocktail.id}`, prepareParams(cocktail, 'PUT'))).message;
     console.log(message);
   };
 

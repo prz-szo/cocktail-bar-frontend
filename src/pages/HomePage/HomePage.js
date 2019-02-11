@@ -23,7 +23,7 @@ class HomePage extends React.Component {
     this.__top10Cocktails();
   }
 
-  __fetchTop10Cocktails = fetching('http://localhost:3300/cocktails/top10', prepareParams());
+  __fetchTop10Cocktails = fetching(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/top10`, prepareParams());
   __top10Cocktails = async () => {
     const cocktails = (await this.__fetchTop10Cocktails()).cocktails;
     this.setState({ top10Cocktails: cocktails })
@@ -35,7 +35,7 @@ class HomePage extends React.Component {
   };
 
   __specificCocktail = async (id) => {
-    const cocktail = (await fetchJson(`http://localhost:3300/cocktails/${id}`, prepareParams())).cocktail;
+    const cocktail = (await fetchJson(`http://localhost:${process.env.REACT_APP_BACK_PORT}/cocktails/${id}`, prepareParams())).cocktail;
     this.setState({ randomCocktail: cocktail });
   };
 
