@@ -47,7 +47,6 @@ class BarPage extends React.Component {
     this.setState({ isCocktailEditable: true, cocktailDetails });
   };
   __submitCocktail = (cocktailDetails) => {
-    console.log('Submit cocktail');
     if (cocktailDetails.id === 0){
       this.__sendCocktailToDB(cocktailDetails).then(() => {
         this.__fetchAllCocktails();
@@ -59,7 +58,6 @@ class BarPage extends React.Component {
         this.setState({ isCocktailEditable: false, cocktailDetails });
       });
     }
-    // this.setState({ isCocktailEditable: false, cocktailDetails });
   };
 
   __sendCocktailToDB = async (cocktail) => {
@@ -104,10 +102,6 @@ class BarPage extends React.Component {
           />
           : <CocktailDetails {...this.state.cocktailDetails}/>
         }
-
-        {/*<div className='users-bar'>*/}
-          {/*<Bar/>*/}
-        {/*</div>*/}
 
       </div>
     );

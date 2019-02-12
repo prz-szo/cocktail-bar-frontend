@@ -7,7 +7,7 @@ import './FilterGroup.css';
 
 const OPTIONS = {
   all: 'All',
-  name: 'Name',
+  name: 'Exact name',
   ingredients: 'Number of ingredients',
   specificIngredients: 'Specific ingredients',
   marks: 'Average marks',
@@ -18,7 +18,7 @@ class FilterGroup extends React.Component {
     super(props);
 
     this.state = {
-      query: OPTIONS.name,
+      query: OPTIONS.all,
       value: null
     }
   }
@@ -61,10 +61,17 @@ class FilterGroup extends React.Component {
       default:
         const cocktails = (await fetchJson(`${process.env.REACT_APP_BACK}/cocktails`)).cocktails;
         if (cocktails) {
+          if (this.state.value) {
+            return this.props.setCocktailsList(this.__filterCocktailsByPhrase(cocktails, this.state.value));
+          }
           this.props.setCocktailsList(cocktails);
         }
         break;
     }
+  };
+
+  __filterCocktailsByPhrase = (cocktails, phrase) => {
+    return cocktails.filter(cocktail => cocktail.name.includes(phrase));
   };
 
   __getInputType = () => {
@@ -80,16 +87,24 @@ class FilterGroup extends React.Component {
 
   render() {
     return (
-      <div className='filter-group'>
+      <div className='filter-group' onKeyDown={e => {
+        if (e.key === 'Enter')
+          this.__fetchCocktails();
+        }
+      }>
         <ControlGroup fill>
-          <InputGroup intent={Intent.PRIMARY} type={this.__getInputType()} onChange={(e) => this.setState({value: e.target.value})}/>
+          <InputGroup intent={Intent.PRIMARY} type={this.__getInputType()}
+                      onChange={(e) => this.setState({ value: e.target.value })}
+          />
           <HTMLSelect options={Object.values(OPTIONS)} onChange={this.__changeCocktailsQuery}/>
         </ControlGroup>
         <ButtonGroup fill>
           <Button text='Add new' icon='plus' onClick={this.props.addNewCocktail}/>
           <Button text='Random' icon='random' onClick={this.__randomCocktail}/>
           <Button text='By your bar' icon='shop' disabled/>
-          <Button intent={Intent.PRIMARY} text='Fetch' icon='filter-list' onClick={this.__fetchCocktails}/>
+          <Button intent={Intent.PRIMARY} text='Fetch' icon='filter-list'
+                  onClick={this.__fetchCocktails}
+          />
         </ButtonGroup>
       </div>
     );
