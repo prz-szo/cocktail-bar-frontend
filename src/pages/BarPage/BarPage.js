@@ -30,7 +30,7 @@ class BarPage extends React.Component {
 
   __fetchAllCocktails = async () => {
     const cocktails = (await fetchAllCocktails()).cocktails;
-    cocktails.sort((a, b) => a.id - b.id);
+    cocktails.sort((a, b) => a.name.localeCompare(b.name));
     this.setState({ cocktails });
   };
 
@@ -38,6 +38,7 @@ class BarPage extends React.Component {
     this.setState({ isCocktailEditable: true, cocktailDetails: EMPTY_COCKTAIL_DATA });
   };
   __setCocktailsList = (cocktails) => {
+    cocktails.sort((a, b) => a.name.localeCompare(b.name));
     this.setState({ cocktails });
   };
   __previewCocktail = (cocktailDetails) => {
