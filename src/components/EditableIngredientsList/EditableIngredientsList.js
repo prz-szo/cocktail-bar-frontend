@@ -40,7 +40,7 @@ class EditableIngredientsList extends React.Component {
   __fetchAllIngredients = async () => {
     const fullIngredientsList = (await fetchAllIngredients()).ingredients;
     const list = fullIngredientsList.map(ing => ({ value: ing.id, label: ing.name }));
-    this.setState({ fullIngredientsList: list });
+    this.setState({ fullIngredientsList: list, value: {...this.state.value, name: list[0].label, measure: measures[0].label} });
   };
 
   __selectIngredient = (e) => {
@@ -62,8 +62,10 @@ class EditableIngredientsList extends React.Component {
   __addIngredient = () => {
     const { name, amount, measure } = this.state.value;
     const ingredients = [...this.props.ingredients];
-    ingredients.push({ name, amount, measure });
-    this.props.onChange(ingredients);
+    if (amount > 0 && ingredients.filter(ing => ing.name === name).length === 0) {
+      ingredients.push({ name, amount, measure });
+      this.props.onChange(ingredients);
+    }
   };
 
   __deleteIngredient = (name) => {
@@ -79,6 +81,7 @@ class EditableIngredientsList extends React.Component {
           <HTMLSelect
             fill
             options={this.state.fullIngredientsList}
+            value={this.state.value.name}
             onChange={this.__selectIngredient}
           />
           <ControlGroup fill>
@@ -89,6 +92,7 @@ class EditableIngredientsList extends React.Component {
             />
             <HTMLSelect
               options={measures}
+              value={this.state.value.measure}
               onChange={this.__selectMeasure}
             />
           </ControlGroup>
