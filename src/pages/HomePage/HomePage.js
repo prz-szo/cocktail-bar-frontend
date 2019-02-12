@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Intent, Divider } from "@blueprintjs/core";
+import { Button, Intent, Divider, Spinner } from "@blueprintjs/core";
 import CocktailDetails from '../../components/CocktailDetails/CocktailDetails';
 import CocktailsByMarks from '../../components/CocktailsByMarks/CocktailsByMarks';
 import { fetchJson, prepareParams, fetchAllCocktails } from '../../utils/fetch';
@@ -70,7 +70,9 @@ class HomePage extends React.Component {
     return (
       <div className="main">
         <div className='random-cocktail'>
-          <CocktailDetails {...this.state.randomCocktail} />
+          { this.state.randomCocktail.id === 0
+            ? <Spinner intent={Intent.PRIMARY}/>
+            : <CocktailDetails {...this.state.randomCocktail} />}
           <Button
             icon="refresh"
             large
@@ -81,7 +83,9 @@ class HomePage extends React.Component {
         </div>
         <Divider/>
         <div className='top10-cocktails'>
-          <CocktailsByMarks fetchCocktail={this.__specificCocktail} cocktails={this.state.top10Cocktails}/>
+          {this.state.top10Cocktails.length === 0
+            ? <Spinner intent={Intent.PRIMARY}/>
+            : <CocktailsByMarks fetchCocktail={this.__specificCocktail} cocktails={this.state.top10Cocktails}/>}
         </div>
       </div>
     );
