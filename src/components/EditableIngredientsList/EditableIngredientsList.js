@@ -21,8 +21,10 @@ class EditableIngredientsList extends React.Component {
     super(props);
     this.state = {
       value: {
-        name: '',
-        measure: '',
+        name: 1,
+        ingLabel: '',
+        measure: 1,
+        measureLabel: '',
         amount: 0
       },
       fullIngredientsList: []
@@ -40,19 +42,28 @@ class EditableIngredientsList extends React.Component {
   __fetchAllIngredients = async () => {
     const fullIngredientsList = (await fetchAllIngredients()).ingredients;
     const list = fullIngredientsList.map(ing => ({ value: ing.id, label: ing.name }));
-    this.setState({ fullIngredientsList: list, value: {...this.state.value, name: list[0].label, measure: measures[0].label} });
+    this.setState({
+      fullIngredientsList: list,
+      value: {
+        ...this.state.value,
+        name: list[0].value,
+        ingLabel: list[0].label,
+        measure: measures[0].value,
+        measureLabel: measures[0].label
+      }
+    });
   };
 
   __selectIngredient = (e) => {
     const ingValue = +e.target.value;
-    const name = this.state.fullIngredientsList.find(ing => ing.value === ingValue).label;
-    this.setState({ value: { ...this.state.value, name } });
+    const ingredient = this.state.fullIngredientsList.find(ing => ing.value === ingValue);
+    this.setState({ value: { ...this.state.value, name: ingredient.value, ingLabel: ingredient.label } });
   };
 
   __selectMeasure = (e) => {
     const measureValue = +e.target.value;
-    const measure = measures.find(obj => obj.value === measureValue).label;
-    this.setState({ value: { ...this.state.value, measure } });
+    const measure = measures.find(obj => obj.value === measureValue);
+    this.setState({ value: { ...this.state.value, measure: measure.value, measureLabel: measure.label } });
   };
 
   __inputAmount = (e) => {
@@ -60,10 +71,10 @@ class EditableIngredientsList extends React.Component {
   };
 
   __addIngredient = () => {
-    const { name, amount, measure } = this.state.value;
+    const { ingLabel, amount, measureLabel } = this.state.value;
     const ingredients = [...this.props.ingredients];
-    if (amount > 0 && ingredients.filter(ing => ing.name === name).length === 0) {
-      ingredients.push({ name, amount, measure });
+    if (amount > 0 && ingredients.filter(ing => ing.name === ingLabel).length === 0) {
+      ingredients.push({ name: ingLabel, amount, measure: measureLabel });
       this.props.onChange(ingredients);
     }
   };

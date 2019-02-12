@@ -34,6 +34,6 @@ export let measures = {
   "whole": 33
 };
 
-measures = Object.keys(measures).map((measurement, index) => ({value: measures[measurement], label: measurement}));
+measures = Object.keys(measures).map((measurement) => ({value: measures[measurement], label: measurement}));
 
 export default measures;
